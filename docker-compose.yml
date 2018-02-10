@@ -1,0 +1,9 @@
+version: '2.1'
+
+services:
+  proxy:
+    build: .
+    env_file:
+      - .env
+    environment:
+      GOOGLE_AUTH_PROXY: ''
