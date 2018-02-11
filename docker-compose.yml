@@ -5,5 +5,11 @@ services:
     build: .
     env_file:
       - .env
-    environment:
-      GOOGLE_AUTH_PROXY: ''
+  server:
+    build:
+      context: ./example
+    working_dir: /app
+    volumes:
+      - ./example:/app
+    ports:
+      - 5000:5000
