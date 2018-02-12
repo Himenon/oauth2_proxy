@@ -5,11 +5,42 @@ services:
     build: .
     env_file:
       - .env
-  server:
+    volumes:
+      - ./hosts:/etc/hosts
+      # - ./oauth2_proxy/oauth2_proxy.cfg:/etc/oauth2_proxy.cfg
+      # - ./logs:/var/log/nginx
+    links:
+      - backend-a
+      - backend-b
+    depends_on:
+      - backend-a
+      - backend-b
+    ports:
+      - 8080:80
+      - 4180:4180
+
+  backend-a:
     build:
-      context: ./example
+      context: ./backend
     working_dir: /app
     volumes:
-      - ./example:/app
+      - ./backend:/app
+      - ./bin/entrypoint.sh:/entrypoint.sh
     ports:
-      - 5000:5000
+      - 5001:5000
+    expose:
+      - 5000
+    environment:
+      - SERVER_NAME=Backend A
+  backend-b:
+    build:
+      context: ./backend
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    ports:
+      - 5002:5000
+    expose:
+      - 5000
+    environment:
+      - SERVER_NAME=Backend B

@@ -16,9 +16,12 @@ RUN go get github.com/bitly/google_auth_proxy
 FROM nginx:latest
 
 COPY --from=build-go /root/go/bin/google_auth_proxy /google_auth_proxy
-COPY ./bin/entrypoint.sh /entrypoint
+COPY ./bin/entrypoint.sh /entrypoint.sh
 COPY ./bin/build.sh /build.sh
-COPY ./conf /etc/nginx/conf.d
+COPY ./conf.d /etc/nginx/conf.d
+COPY ./hosts /etc/hosts
 RUN /build.sh
 
-ENTRYPOINT ["/entrypoint"]
+ENTRYPOINT ["/entrypoint.sh"]
+
+CMD ["nginx", "-g", "daemon off;"]
