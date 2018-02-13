@@ -2,22 +2,36 @@ version: '2.1'
 
 services:
   proxy:
-    build: .
+    build:
+      context: ./nginx
     env_file:
       - .env
     volumes:
-      - ./hosts:/etc/hosts
-      # - ./oauth2_proxy/oauth2_proxy.cfg:/etc/oauth2_proxy.cfg
+      - ./nginx/hosts:/etc/hosts
       # - ./logs:/var/log/nginx
     links:
       - backend-a
       - backend-b
+      - oauth2-proxy
     depends_on:
       - backend-a
       - backend-b
+      - oauth2-proxy
     ports:
       - 8080:80
-      - 4180:4180
+
+  oauth2-proxy:
+    env_file:
+      - .env
+    build:
+      context: ./oauth2_proxy
+    expose:
+      - 4180
+    links:
+      - backend-a
+      - backend-b
+    volumes:
+      - ./oauth2_proxy/run.sh:/run.sh
 
   backend-a:
     build:
@@ -25,7 +39,6 @@ services:
     working_dir: /app
     volumes:
       - ./backend:/app
-      - ./bin/entrypoint.sh:/entrypoint.sh
     ports:
       - 5001:5000
     expose:
