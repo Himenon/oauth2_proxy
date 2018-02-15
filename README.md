@@ -5,13 +5,14 @@
 ## Usage
 
 ```
-docker-compose build
 docker-compose up
 ```
 
 ## TODO
 
-- [ ] 動くように
+- [x] 動くように
+- [ ] Redirect URIを1つだけにできるかどうか確認する
+    - 参考: https://github.com/bitly/oauth2_proxy/issues/237
 
 ## Author
 

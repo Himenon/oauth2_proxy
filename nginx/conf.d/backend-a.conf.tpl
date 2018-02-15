@@ -3,7 +3,7 @@ upstream backend1 {
 }
 
 server {
-  listen 8080;
+  listen 80;
   server_name a.localhost.com;
 
   include conf.d/common/oauth2_proxy.conf;

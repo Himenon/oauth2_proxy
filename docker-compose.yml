@@ -4,8 +4,13 @@ services:
   proxy:
     build:
       context: ./nginx
-    env_file:
-      - .env
+    environment:
+      CLIENT_ID: <your-client-id>
+      CLIENT_SECRET: <your-secret-key>
+      COOKIE_NAME: <your-cookie-name>
+      COOKIE_SECRET: <your-cookie-secret>
+      COOKIE_DOMAIN: example.com
+      EMAIL_DOMAIN: example.com
     volumes:
       - ./nginx/hosts:/etc/hosts
       # - ./logs:/var/log/nginx
@@ -18,7 +23,7 @@ services:
       - backend-b
       - oauth2-proxy
     ports:
-      - 8080:80
+      - 80:80
 
   oauth2-proxy:
     env_file:

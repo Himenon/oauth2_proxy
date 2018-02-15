@@ -7,8 +7,7 @@ echo "====== start google_auth_proxy ======"
 --cookie-secret=$COOKIE_SECRET \
 --cookie-secure=false \
 --email-domain=$EMAIL_DOMAIN \
---upstream=http://backend-a:5000 \
+--upstream=http://127.0.0.1 \
 --cookie-name=$COOKIE_NAME \
---cookie-domain=a.localhost.com \
---redirect-url=a.localhost.com:8080 \
--http-address="0.0.0.0:4180"
+--cookie-domain=$COOKIE_DOMAIN \
+--http-address="0.0.0.0:4180"
